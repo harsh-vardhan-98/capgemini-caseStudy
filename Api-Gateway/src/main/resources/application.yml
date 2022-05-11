@@ -1,0 +1,37 @@
+eureka:
+  client:
+    register-with-eureka: true
+server:
+  port: 8080
+spring:
+        application:
+               name: API_Gateway              
+        cloud: 
+          gateway:
+#            globalcors:
+#              corsConfigurations:'[/**]':
+#                allowedOrigins: "http://localhost:3000"
+#                allowedHeaders: "*"
+#                allowedMethods: "*"
+            routes:
+            - id: admin
+              uri: lb://Admin-service/admin/access
+              predicates:
+              - Path=/admin/access/**
+            - id: checkIn
+              uri: lb://Checkin-microservice/checkIn
+              predicates:
+              - Path=/checkIn/**
+            - id: book
+              uri: lb://booking-microservice/book
+              predicates:
+              - Path=/book/**
+            - id: pay
+              uri: lb://payment-service/pay
+              predicates:
+              - Path=/pay/**
+            - id: user
+              uri: lb://Userservice/user
+              predicates:
+              - Path=/user/**
+              
